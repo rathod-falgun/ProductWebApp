@@ -1,0 +1,9 @@
+/target/
+target/
+.classpath
+.project
+.settings/
+*.class
+*.log
+src\main\webapp\WEB-INF\spring-servlet.xml
+spring-servlet.xml
