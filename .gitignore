@@ -8,3 +8,4 @@ target/
 src\main\webapp\WEB-INF\spring-servlet.xml
 spring-servlet.xml
 productWebApp.war
+.env

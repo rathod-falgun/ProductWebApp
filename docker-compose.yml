@@ -1,0 +1,22 @@
+services:
+  app:
+   build: .
+   container_name: productwebapp
+   ports:
+   - "8089:8080"
+   depends_on:
+   - mysql
+   
+  mysql:
+    image: mysql:8.0
+    container_name: productwebapp-mysql
+    environment:
+      MYSQL_DATABASE: productWebApp
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:
