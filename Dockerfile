@@ -1,15 +1,21 @@
-# Use the official Apache Tomcat image
-FROM tomcat:10.1-jdk17-temurin
+# Step 1: Build the Spring MVC application
+FROM maven:3.9-eclipse-temurin-17 AS build
 
-# Remove the default Tomcat web apps to keep it clean
+WORKDIR /app
+
+COPY pom.xml .
+COPY src ./src
+
+RUN mvn clean package -DskipTests
+
+
+# Step 2: Run the application using Tomcat 9
+FROM tomcat:9.0-jdk17-temurin
+
 RUN rm -rf /usr/local/tomcat/webapps/*
 
-# Copy your WAR file into the Tomcat webapps directory as ROOT.war
-# (This ensures your app runs at the main URL '/' instead of '/your-app-name')
-COPY productWebApp.war
+COPY --from=build /app/target/productWebApp.war /usr/local/tomcat/webapps/ROOT.war
 
-# Tomcat runs on port 8080 by default
 EXPOSE 8080
 
-# Start Tomcat
 CMD ["catalina.sh", "run"]
